@@ -1,5 +1,6 @@
-// import { useState, useEffect } from 'react';
-import {createBrowserRouter,RouterProvider} from "react-router-dom"
+import { useState, } from 'react';
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
+
 import './App.css'
 import Wallet from './pages/wallet';
 import CreateTask from './pages/createTask';
@@ -7,22 +8,29 @@ import DeleteTask from './pages/deleteTask';
 import UpdateTask from './pages/updateTask';
 import ViewTask from './pages/viewTask';
 import ViewAllTasks from './pages/viewAllTask';
-import Navigation from './pages/navigation';
 
 function App() {
 
+  const [state, setState] = useState({ web3: null, account: null, contract: null })
+  
+
+  const saveState = ({ web3, account, contract }) => {
+    setState({ web3, account, contract })
+    console.log('working')
+  }
+
   const router = createBrowserRouter([
-    {path:'/', element:<Wallet/>},
-    {path:'/createTask', element:<CreateTask/>},
-    {path:'/viewTask', element:<ViewTask/>},
-    {path:'/viewTasks', element:<ViewAllTasks/>},
-    {path:'/deleteTask', element:<DeleteTask/>},
-    {path:'/updateTask', element:<UpdateTask/>},
-    
+    { path: '/', element: <Wallet saveState={saveState} /> },
+    { path: '/createTask', element: <CreateTask state={state}/> },
+    { path: '/viewTask', element: <ViewTask /> },
+    { path: '/viewTasks', element: <ViewAllTasks /> },
+    { path: '/deleteTask', element: <DeleteTask state={state}/> },
+    { path: '/updateTask', element: <UpdateTask state={state}/> },
+
   ])
   return (
     <>
-     <RouterProvider router={router}/>
+      <RouterProvider router={router} />
     </>
   )
 }

@@ -1,8 +1,11 @@
-import  { useState } from 'react'; 
+import { useState } from 'react';
+import PropTypes from 'prop-types';
 import Web3 from 'web3';
-
-const Wallet = () => {
+import { useNavigate } from 'react-router-dom';
+import Abi from "../../ABI.json"
+const Wallet = ({ saveState }) => {
     const [walletStatus, setWalletStatus] = useState(false);
+    const navigateTo = useNavigate();
 
     const connectWallet = async () => {
         try {
@@ -11,6 +14,11 @@ const Wallet = () => {
                 const accounts = await window.ethereum.request({
                     method: 'eth_requestAccounts',
                 });
+
+                const contractAddress = "0x565bf6e1733f420e3141e74fa74e872a8167b2da";
+                const contract = new web3.eth.Contract(Abi, contractAddress)
+                saveState({ web3: web3, account: accounts[0], contract: contract })
+                navigateTo('viewTasks')
 
                 if (accounts.length > 0) {
                     setWalletStatus(true);
@@ -31,5 +39,10 @@ const Wallet = () => {
         </button>
     );
 };
+
+Wallet.propTypes = {
+    saveState: PropTypes.func,
+};
+
 
 export default Wallet;
