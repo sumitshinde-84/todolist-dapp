@@ -74,3 +74,40 @@ const checkDateClash = async (date) => {
         return "Error checking date clash";
     }
 }
+
+app.post("/createTask", async (req, res) => {
+    const { date } = req.body;
+
+    try {
+        const clashResult = await checkDateClash(date); 
+        if (clashResult !== 'No task found') {
+            res.status(409).json({ status: 409, message: clashResult });
+        } else {
+            res.status(200).json({ status: 200, message: 'Task can be added' });
+        }
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ status: 500, message: 'Internal server error' });
+    }
+});
+
+
+app.post("/updateTask", async (req, res) => {
+    const { date } = req.body;
+
+    try {
+        const clashResult = await checkDateClash(date); 
+        if (clashResult !== 'No task found') {
+            res.status(409).json({ status: 409, message: clashResult });
+        } else {
+            res.status(200).json({ status: 200, message: 'Task can be added' });
+        }
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ status: 500, message: 'Internal server error' });
+    }
+});
+
+app.listen(port, () => {
+    console.log(`server is running at ${port}`);
+});
