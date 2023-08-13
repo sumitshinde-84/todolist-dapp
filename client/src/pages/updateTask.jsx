@@ -1,5 +1,9 @@
+import Navigation from "./navigation";
+
 const UpdateTask = () => {
-    return <></>;
+    return <>
+    <Navigation/>
+    </>;
 };
 
 export default UpdateTask;

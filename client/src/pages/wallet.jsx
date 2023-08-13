@@ -17,7 +17,7 @@ const Wallet = ({ saveState }) => {
 
                 const contractAddress = "0x565bf6e1733f420e3141e74fa74e872a8167b2da";
                 const contract = new web3.eth.Contract(Abi, contractAddress)
-                saveState({ web3: web3, account: accounts[0], contract: contract })
+                saveState(web3,accounts[0],contract)
                 navigateTo('viewTasks')
 
                 if (accounts.length > 0) {

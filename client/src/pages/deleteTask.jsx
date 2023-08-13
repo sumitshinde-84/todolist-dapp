@@ -1,5 +1,9 @@
+import Navigation from "./navigation";
+
 const DeleteTask = () => {
-    return <></>;
+    return <>
+    <Navigation/>
+    </>;
 };
 
 export default DeleteTask;

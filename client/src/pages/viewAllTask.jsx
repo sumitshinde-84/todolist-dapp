@@ -1,4 +1,5 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import Navigation from "./navigation";
 
 const ViewAllTasks = () => {
     const [taskList, setTaskList] = useState([]);
@@ -24,18 +25,20 @@ const ViewAllTasks = () => {
         };
 
         viewTasks();
-    }, []); 
+    }, []);
 
-    return (
+    return <>
+        <Navigation />
         <div>
+
             <h1>View All Tasks</h1>
             <ul>
                 {taskList.map(task => (
-                    <li key={task.id}>{task.title}</li>
+                    <li key={task.id}>{task.name}</li>
                 ))}
             </ul>
         </div>
-    );
+    </>;
 };
 
 export default ViewAllTasks;

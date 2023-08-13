@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Navigation from "./navigation";
 
 const ViewTask = () => {
     const [task, setTask] = useState(null);
@@ -32,13 +33,14 @@ const ViewTask = () => {
     }, [task])
 
 
-    return (
+    return <>
+         <Navigation/>
         <form onSubmit={formHandler}>
             <label htmlFor="Id">Id</label>
             <input className="id-input" type="tel" onInput={(event) => { inputHandler(event.target.value) }} value={id} />
             <button type="submit">view</button>
         </form>
-    )
+        </>
 };
 
 export default ViewTask;
