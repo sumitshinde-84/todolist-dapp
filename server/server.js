@@ -36,3 +36,41 @@ app.get("/viewTask/:taskId", async (req, res) => {
     }
 });
 
+app.get("/viewTasks", async (req, res) => {
+    try {
+        const tasks = await contract.methods.viewAllTask().call();
+        if (tasks.length > 0) {
+            const taskObj = tasks.map(({ id, name, date }) => {
+                return {
+                    id: Number(id),
+                    name,
+                    date,
+                };
+            });
+
+            res.status(200).json({
+                status: 200,
+                taskObj,
+                message: "tasks exist",
+            });
+        } else {
+            res.status(404).json({
+                status: 404,
+                message: "tasks does not exist",
+            });
+        }
+    } catch (err) {
+        console.error(err);
+    }
+});
+
+const checkDateClash = async (date) => {
+    try {
+        const allTask = await contract.methods.viewAllTask().call();
+        const result = allTask.find(task => task.date === date);
+        return result ? "Clash: task cannot be added" : "No task found";
+    } catch (err) {
+        console.log(err);
+        return "Error checking date clash";
+    }
+}
